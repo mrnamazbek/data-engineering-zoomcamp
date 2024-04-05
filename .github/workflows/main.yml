@@ -12,7 +12,7 @@ jobs:
       - name: Trigger dbt Cloud Job
         uses: fjogeleit/http-request-action@master
         with:
-          url: 'https://cloud.getdbt.com/api/v2/accounts/255245/jobs/567637/run/'
+          url: 'https://cloud.getdbt.com/api/v2/accounts/255245/jobs/567667/run/'
           method: 'POST'
           contentType: 'application/json'
           headers: '{"Authorization": "Token ${{ secrets.DBT_CLOUD_API_TOKEN }}"}'
