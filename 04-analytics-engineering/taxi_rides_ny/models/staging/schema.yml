@@ -9,6 +9,7 @@ sources:
 
       # loaded_at_field: record_loaded_at
     tables:
+      - name: fhv
       - name: green_trip_data
       - name: yellow_trip_data
          # freshness:
@@ -197,3 +198,32 @@ models:
             description: Total amount of all tolls paid in trip.
           - name: Total_amount 
             description: The total amount charged to passengers. Does not include cash tips.
+    - name: stg_fhv_tripdata
+      description: >
+        Trips made by For-Hire Vehicles (FHV) including services like Uber, Lyft, and other app-based ride services.
+        Unlike yellow and green taxis, FHVs are not allowed to pick up passengers without a pre-arrangement.
+      columns:
+          - name: dispatching_base_num
+            description: The TLC-licensed base number or dispatching base associated with the FHV trip.
+          - name: pickup_datetime
+            description: The date and time when the trip was started.
+          - name: dropoff_datetime
+            description: The date and time when the trip was ended.
+          - name: PUlocationID
+            description: The TLC-designated taxi zone ID for the pickup location.
+            tests:
+              - relationships:
+                  to: ref('taxi_zone_lookup')
+                  field: locationid
+                  severity: warn
+          - name: DOlocationID
+            description: The TLC-designated taxi zone ID for the dropoff location.
+            tests:
+              - relationships:
+                  to: ref('taxi_zone_lookup')
+                  field: locationid
+                  severity: warn
+          - name: SR_Flag
+            description: Shared ride flag. Indicates whether the trip was part of a shared ride, which could influence fare calculations.
+          - name: Affiliated_base_number
+            description: The base number that the vehicle is affiliated with. May differ from the dispatching base number if, for example, the ride is subcontracted.
