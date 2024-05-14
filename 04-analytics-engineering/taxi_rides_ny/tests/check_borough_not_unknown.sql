@@ -1,0 +1,1 @@
+SELECT * FROM {{ ref('fact_fhv_trips') }} WHERE pickup_borough = 'Unknown'
